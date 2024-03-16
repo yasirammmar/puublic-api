@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Titan+One&display=swap"
+    rel="stylesheet">
+</head>
+<body>
+    <h1>Joke Generator</h1>
+    <form action="/jokes" method="POST">
+        <input type="radio" id="AnyCategoryCheckbox" name="category" value="Any" onchange="toogleCustom()" > 
+        <label for="anycategory">Any:</label>
+        <input type="radio" id="CustomCategoryCheckbox" name="category" onchange="toogleCustom()" > 
+        <label for="customcategory">Custom:</label>
+        
+        <div id="customOptions"  style="display: none;"></div>
+        
+        <!-- <select name="customCategorySelect" id="categorySelect"> -->
+
+            <label><input type="checkbox" name="customCategorySelect" value="Miscellaneous"> Miscellaneous</label><br>
+            <label><input type="checkbox" name="customCategorySelect" value="Programming"> Programming</label><br>
+            <label><input type="checkbox" name="customCategorySelect" value="Pun"> Pun</label><br>
+            <label><input type="checkbox" name="customCategorySelect" value="Spooky"> Spooky</label><br>
+            <label><input type="checkbox" name="customCategorySelect" value="Christmas"> Christmas</label><br>
+            <!-- Add more categories as needed -->
+        <!-- </select> -->
+      
+        <label for="BlackListFlag">Select flags to blacklist:  </label>
+        <!-- <select name="TypeSelect" id="TypeSelect"> -->
+            <!-- <option value="single">Single</option>
+            <option value="twopart">Two Part</option> -->
+            <label><input type="checkbox" name="BlackListFlag" value="nsfw"> nsfw</label><br>
+            <label><input type="checkbox" name="BlackListFlag" value="religious"> religious</label><br>
+            <label><input type="checkbox" name="BlackListFlag" value="political"> political</label><br>
+            <label><input type="checkbox" name="BlackListFlag" value="racist"> racist</label><br>
+            <label><input type="checkbox" name="BlackListFlag" value="sexist"> sexist</label><br>
+            <label><input type="checkbox" name="BlackListFlag" value="explicit"> explicit</label><br>
+
+        <label for="Langauge">Select Language:  </label>
+         <select name="Language" id="Langauge"> 
+            <!-- <option value="single">Single</option>
+            <option value="twopart">Two Part</option> -->
+            <option  value="en"> en-English</option>
+            <option  value="de"> de-German</option>
+            <option  value="cs"> cs-Czech</option>
+            <option  value="es"> es-Spainsh</option>
+            <option  value="fr"> fr-French</option>
+            <option  value="pt"> pt-Protuguese</option>
+        </select> 
+        <label for="responseFormat">Select responsFormat:  </label>
+        <!-- <select name="TypeSelect" id="TypeSelect"> -->
+            <!-- <option value="single">Single</option>
+            <option value="twopart">Two Part</option> -->
+            <label><input type="radio" name="responseFormat" value="json"> default:json</label><br>
+            <label><input type="radio" name="responseFormat" value="xml"> xml</label><br>
+            <label><input type="radio" name="responseFormat" value="yaml"> yaml</label><br>
+            <label><input type="radio" name="responseFormat" value="plainText"> plaintext</label><br>
+         
+
+
+        <label for="TypeSelect">Select at least one joke type:</label>
+        <!-- <select name="TypeSelect" id="TypeSelect"> -->
+            <!-- <option value="single">Single</option>
+            <option value="twopart">Two Part</option> -->
+            <label><input type="checkbox" name="TypeSelect" value="Single"> Single</label><br>
+            <label><input type="checkbox" name="TypeSelect" value="Two Part"> Two Part</label><br>
+            
+        <!-- </select> -->
+        <label for="range">Search for a joke within this ID range:</label><br>
+        <input type="number" id="minId" name="minId" placeholder="0" min="0"><br>
+        <input type="number" id="maxId" name="maxId" placeholder="1368" max="1368"><br>
+
+        <label for="amount">Amount:</label><br>
+        <input type="number" id="amount" name="amount" placeholder="1" min="1" max="10"><br>
+       
+       
+        <button type="submit">Get Joke</button>
+     
+        
+
+        <% if (typeof error !== 'undefined' && error) { %>
+            <p>Error: <%= error %></p>
+        <% } else if (joke && joke.length > 0) { %>
+            <% joke.forEach(j => { %>
+                <% if (j && j.type) { %>
+                    <% if (j.type === 'single') { %>
+                        <p><%= j.joke %></p>
+                    <% } else if(j.type === 'twopart') { %>
+                        <p><%= j.setup %></p>
+                        <p><%= j.delivery %></p>
+                    <% } %>
+                <% } %>
+            <% }); %>
+        <% } else { %>
+            <p>No jokes found</p>
+        <% } %>
+        
+    
+    
+    <script>
+        function toogleCustom(){
+        const anycheckbox=document.getElementById("AnyCategoryCheckbox");
+        const customcategory=document.getElementById("CustomCategoryCheckbox");
+        const customOptions=document.getElementById("customOptions");
+        const customSelect=document.getElementById("categorySelect")
+        if (anyCheckbox.checked) {
+            customCheckbox.checked = false;
+            customOptions.style.display = 'none';
+            customSelect.value='';
+        } else if (customCheckbox.checked) {
+            customOptions.style.display = 'block';
+        } else {
+            customOptions.style.display = 'none';
+        }
+        }
+      
+        
+    </script>
+</body>
+</html>
